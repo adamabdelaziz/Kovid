@@ -9,8 +9,9 @@ interface CovidService {
 
     //Could be Covids or CovidItem in <>
     @GET("/v1/us/current.json")
-    suspend fun getCurrentUSValues() : Response<USValues>
+    suspend fun getCurrentUSValues() : Response<USValue>
 
+    //will probably have to make this Response<List<StateValue>>
     @GET("/v1/states/{state}/current.json")
     suspend fun getCurrentValueForAState(@Path("state") state :String):Response<StateValue>
 

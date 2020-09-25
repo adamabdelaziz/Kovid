@@ -1,4 +1,4 @@
-package com.example.kovid.ui.dashboard
+package com.example.kovid.ui.state
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,20 +12,20 @@ import com.example.kovid.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DashboardFragment : Fragment() {
+class StateFragment : Fragment() {
 
-    private lateinit var dashboardViewModel: DashboardViewModel
+    private lateinit var stateViewModel: StateViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        dashboardViewModel =
-            ViewModelProviders.of(this).get(DashboardViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
+        stateViewModel =
+            ViewModelProviders.of(this).get(StateViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_state, container, false)
         val textView: TextView = root.findViewById(R.id.text_dashboard)
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
+        stateViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

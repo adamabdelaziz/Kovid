@@ -3,8 +3,8 @@ package com.example.kovid.data.entities
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "USValues")
-data class USValues(
+@Entity(tableName = "USValue")
+data class USValue(
     @PrimaryKey
     val date: Int,
     val dateChecked: String,

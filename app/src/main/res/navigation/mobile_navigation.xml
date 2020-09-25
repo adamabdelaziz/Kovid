@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_country">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.kovid.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_country"
+        android:name="com.example.kovid.ui.country.CountryFragment"
+        android:label="@string/title_country"
+        tools:layout="@layout/fragment_country" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.kovid.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_state"
+        android:name="com.example.kovid.ui.state.StateFragment"
+        android:label="@string/title_state"
+        tools:layout="@layout/fragment_state" />
 
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.kovid.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_notifications"-->
+<!--        android:name="com.example.kovid.ui.notifications.NotificationsFragment"-->
+<!--        android:label="@string/title_notifications"-->
+<!--        tools:layout="@layout/fragment_notifications" />-->
 </navigation>

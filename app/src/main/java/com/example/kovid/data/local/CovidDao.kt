@@ -6,15 +6,15 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.kovid.data.entities.StateValue
-import com.example.kovid.data.entities.USValues
+import com.example.kovid.data.entities.USValue
 
 @Dao
 interface CovidDao {
 
     //Do this class
 
-    @Query("SELECT * FROM USValues")
-    fun getCurrentUSValues() : LiveData<USValues>
+    @Query("SELECT * FROM USValue")
+    fun getCurrentUSValues() : LiveData<USValue>
 
     //change red ID to the variable name in CovidItem
     @Query("SELECT * FROM StateValues WHERE state = :state")
@@ -30,6 +30,6 @@ interface CovidDao {
     suspend fun insertOneStateValue(stateValue: StateValue)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCurrentUSValues(currentUSValues: USValues)
+    suspend fun insertCurrentUSValues(currentUSValues: USValue)
 
 }

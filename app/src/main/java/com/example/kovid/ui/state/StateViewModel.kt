@@ -1,13 +1,15 @@
 package com.example.kovid.ui.state
 
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.kovid.data.repository.CovidRepository
 
-class StateViewModel : ViewModel() {
+class StateViewModel @ViewModelInject constructor(private val repository: CovidRepository) :
+    ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
-    }
-    val text: LiveData<String> = _text
+    val stateMetadata = repository.getStateMetaData()
+
 }

@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.kovid.data.entities.StateMetadata
 import com.example.kovid.data.entities.StateValue
 import com.example.kovid.data.entities.USValue
 
@@ -23,6 +24,9 @@ interface CovidDao {
     @Query("SELECT * FROM StateValues")
     fun getAllStateValues(): LiveData<List<StateValue>>
 
+    @Query("SELECT * FROM StateMetadata")
+    fun getStateMetadata():LiveData<List<StateMetadata>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllStateValues(listOfStateValue: List<StateValue>)
 
@@ -31,5 +35,8 @@ interface CovidDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCurrentUSValues(currentUSValues: USValue)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertStateMetadata(stateMetadata: List<StateMetadata>)
 
 }

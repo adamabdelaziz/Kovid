@@ -14,20 +14,5 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class StateFragment : Fragment() {
 
-    private lateinit var stateViewModel: StateViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        stateViewModel =
-            ViewModelProviders.of(this).get(StateViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_state, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        stateViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
-    }
 }

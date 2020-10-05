@@ -9,4 +9,5 @@ class CountryViewModel @ViewModelInject constructor(private val repository: Covi
     ViewModel() {
 
     val USValue = repository.getCurrentUSValues()
+    val stateMetadata = repository.getStateMetaData()
 }

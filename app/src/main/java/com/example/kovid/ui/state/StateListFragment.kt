@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kovid.data.entities.StateMetadata
 import com.example.kovid.databinding.FragmentStateListBinding
@@ -40,8 +41,10 @@ class StateListFragment : Fragment() {
 
     private fun setupRecyclerView() {
         adapter = StatesAdapter(this)
-        binding.stateList.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+        val manager = LinearLayoutManager(requireContext(),  LinearLayoutManager.VERTICAL, false)
+        binding.stateList.layoutManager = manager
+
         binding.stateList.adapter = adapter
     }
 

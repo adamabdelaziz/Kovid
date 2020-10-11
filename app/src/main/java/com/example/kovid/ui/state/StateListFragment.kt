@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.kovid.R
 import com.example.kovid.data.entities.StateMetadata
 import com.example.kovid.databinding.FragmentStateListBinding
 import com.example.kovid.utils.Resource
@@ -88,8 +91,10 @@ class StateListFragment : Fragment() {
     }
 
     fun onClickedState(stateId: String) {
-        Timber.d(" %sclicked ", stateId)
+        Timber.d("spaghet")
         //Go to state details screen of specific state
+
+        findNavController().navigate(R.id.action_stateListFragment_to_stateFragment, bundleOf("id" to stateId))
     }
 
 

@@ -19,7 +19,7 @@ interface CovidDao {
 
     //change red ID to the variable name in CovidItem
     @Query("SELECT * FROM StateValues WHERE state = :state")
-    fun getCurrentStateValues(state: String): LiveData<StateValue>
+    fun getCurrentStateValues(state: String): LiveData<List<StateValue>>
 
     @Query("SELECT * FROM StateValues")
     fun getAllStateValues(): LiveData<List<StateValue>>
@@ -31,7 +31,7 @@ interface CovidDao {
     suspend fun insertAllStateValues(listOfStateValue: List<StateValue>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertOneStateValue(stateValue: StateValue)
+    suspend fun insertOneStateValue(stateValue: List<StateValue>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCurrentUSValues(currentUSValues: USValue)

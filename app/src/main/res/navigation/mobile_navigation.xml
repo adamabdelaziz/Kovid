@@ -14,8 +14,18 @@
     <fragment
         android:id="@+id/navigation_state_list"
         android:name="com.example.kovid.ui.state.StateListFragment"
-        android:label="@string/title_state"
-        tools:layout="@layout/fragment_state_list" />
+        android:label="@string/title_state_list"
+        tools:layout="@layout/fragment_state_list">
+        <action
+            android:id="@+id/action_stateListFragment_to_stateFragment"
+            app:destination="@id/navigation_state"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_state"
+        android:name="com.example.kovid.ui.state.StateFragment"
+        android:label="@string/title_state_details"
+        tools:layout="@layout/fragment_state" />
 
 <!--    <fragment-->
 <!--        android:id="@+id/navigation_notifications"-->

@@ -17,17 +17,24 @@ class CovidRepository @Inject constructor(
     fun getCurrentUSValues() = performGetOperation(
         databaseQuery = { localDataSource.getCurrentUSValues() },
         networkCall = { remoteDataSource.getCurrentUSValues() },
-        saveCallResult = {localDataSource.insertCurrentUSValues(it) }
+        saveCallResult = { localDataSource.insertCurrentUSValues(it) }
     )
 
     fun getStateMetaData() = performGetOperation(
         databaseQuery = { localDataSource.getStateMetadata() },
         networkCall = { remoteDataSource.getStateMetadata() },
-        saveCallResult = {localDataSource.insertStateMetadata(it) }
+        saveCallResult = { localDataSource.insertStateMetadata(it) }
     )
+
     fun getCurrentValueForAState(state: String) = performGetOperation(
-        databaseQuery = { localDataSource.getCurrentStateValues(state)},
-        networkCall = { remoteDataSource.getCurrentValueForAState(state)},
-        saveCallResult = { localDataSource.insertOneStateValue(it)}
+        databaseQuery = { localDataSource.getCurrentStateValues(state) },
+        networkCall = { remoteDataSource.getCurrentStateValues(state) },
+        saveCallResult = { localDataSource.insertOneStateValue(it) }
+    )
+
+    fun getAllStateValues() = performGetOperation(
+        databaseQuery = { localDataSource.getAllStateValues() },
+        networkCall = { remoteDataSource.getAllStateValues() },
+        saveCallResult = { localDataSource.insertAllStateValues(it) }
     )
 }

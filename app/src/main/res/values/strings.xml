@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Kovid</string>
     <string name="title_country">Country</string>
-    <string name="title_state">State</string>
+    <string name="title_state_list">States</string>
+    <string name="title_state_details">State Details</string>
     <string name="title_notifications">Notifications</string>
 </resources>

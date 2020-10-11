@@ -2,8 +2,8 @@ package com.example.kovid.data.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-
-@Entity(tableName = "StateValues", primaryKeys = ["date", "state"])
+//, primaryKeys = ["date", "state"]
+@Entity(tableName = "StateValues")
 data class StateValue(
     val checkTimeEt: String,
     val commercialScore: Int,
@@ -30,6 +30,7 @@ data class StateValue(
     val positiveIncrease: Int,
     val positiveScore: Int,
     val score: Int,
+    @PrimaryKey
     val state: String,
     val total: Int,
     val totalTestResults: Int,

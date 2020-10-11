@@ -13,10 +13,13 @@ interface CovidService {
     @GET("/v1/us/current.json")
     suspend fun getCurrentUSValues(): Response<USValue>
 
+    @GET("/v1/states/current.json")
+    suspend fun getAllStateValues(): Response<List<StateValue>>
+
     //will probably have to make this Response<List<StateValue>>
     //or not?
     @GET("/v1/states/{state}/current.json")
-    suspend fun getCurrentValueForAState(@Path("state") state: String): Response<StateValue>
+    suspend fun getCurrentStateValues(@Path("state") state: String): Response<List<StateValue>>
 
     @GET("/v1/states/{state}/{date}.json")
     suspend fun getCurrentValueForAStateOnADate(
@@ -27,8 +30,6 @@ interface CovidService {
     @GET("/v1/states/{state}/{date}.json")
     suspend fun getCurrentUSValuesOnADate(@Path("date") date: String): Response<USValue>
 
-    @GET("/v1/states/current.json")
-    suspend fun getCurrentValuesForAllStates(): Response<List<StateValue>>
 
     @GET("/v1/states/info.json")
     suspend fun getStateMetadata(): Response<List<StateMetadata>>

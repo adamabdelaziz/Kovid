@@ -37,4 +37,10 @@ class CovidRepository @Inject constructor(
         networkCall = { remoteDataSource.getAllStateValues() },
         saveCallResult = { localDataSource.insertAllStateValues(it) }
     )
+
+    fun getHistoricValuesForAState(state: String) = performGetOperation(
+        databaseQuery = {localDataSource.getHistoricValuesForAState(state)},
+        networkCall = {remoteDataSource.getHistoricValuesForAState(state)},
+        saveCallResult = {localDataSource.insertHistoricValuesForAState(it)}
+    )
 }

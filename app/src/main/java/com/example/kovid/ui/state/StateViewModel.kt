@@ -18,13 +18,18 @@ class StateViewModel @ViewModelInject constructor(private val repository: CovidR
     val US = repository.getCurrentUSValues()
     val states = repository.getAllStateValues()
 
+
     private val _id = MutableLiveData<String>()
 
-    private val _state = _id.switchMap { id->
+    private val _state = _id.switchMap { id ->
         repository.getCurrentValueForAState(id)
     }
 
-    val state : LiveData<Resource<List<StateValue>>> = _state
+    val state: LiveData<Resource<List<StateValue>>> = _state
+
+    fun getHistoricData(state: String): LiveData<Resource<List<StateValue>>> {
+        return repository.getHistoricValuesForAState(state)
+    }
 
     fun getState(id: String) {
         Timber.d(id + " VM ")

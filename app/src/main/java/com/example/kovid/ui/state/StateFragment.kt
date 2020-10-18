@@ -38,7 +38,38 @@ class StateFragment : Fragment() {
             Timber.d(it + "stateFragment onViewCreated called")
         }
         setupObservers()
+        setupHistoricData(stateID)
         //setup functions
+    }
+
+    private fun setupHistoricData(state: String) {
+        var historic = viewModel.getHistoricData(state)
+
+        historic.observe(viewLifecycleOwner, {
+            when (it.status) {
+                Resource.Status.SUCCESS -> {
+                    Timber.d("historic data success")
+
+                    var list = it.data
+                    if (list != null) {
+                        Timber.d("historic list not null")
+                        for (i in list) {
+                            Timber.d(i.date.toString())
+                            Timber.d(list.size.toString())
+                            Timber.d(i.state)
+                        }
+                    }
+                }
+                Resource.Status.ERROR -> {
+                    Timber.d("historic data error")
+
+                }
+                Resource.Status.LOADING -> {
+                    Timber.d("historic data loading")
+
+                }
+            }
+        })
     }
 
     private fun setupObservers() {
@@ -57,6 +88,7 @@ class StateFragment : Fragment() {
                             if (i.state == stateID) {
                                 Timber.d("matching state " + i.state)
                                 bindData(i)
+
                             }
                         }
                     }
@@ -75,10 +107,28 @@ class StateFragment : Fragment() {
         })
     }
 
+    private fun setupChart(stateValue: StateValue) {
+//        val liveChart = binding.liveChart
+//
+//        val dataset = Dataset(
+//            mutableListOf(
+//                DataPoint(0f, 1f), DataPoint(1f, 3f),
+//                DataPoint(2f, 6f)
+//            )
+//        )
+//
+//        liveChart.setDataset(dataset)
+//            .drawYBounds()
+//            .drawBaseline()
+//            .drawFill()
+//            .drawDataset()
+    }
+
     private fun bindData(stateValue: StateValue) {
         Timber.d("bindData called")
         Timber.d(stateValue.hash)
         Timber.d(stateValue.state)
+
 
     }
 }

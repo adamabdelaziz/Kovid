@@ -8,7 +8,7 @@ import com.example.kovid.data.entities.StateMetadata
 import com.example.kovid.data.entities.StateValue
 import com.example.kovid.data.entities.USValue
 
-@Database(entities = arrayOf(StateValue::class, USValue::class, StateMetadata::class), version = 6, exportSchema = false)
+@Database(entities = arrayOf(StateValue::class, USValue::class, StateMetadata::class), version = 8, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun covidDao(): CovidDao

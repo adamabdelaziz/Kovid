@@ -4,4 +4,6 @@
     <string name="title_state_list">States</string>
     <string name="title_state_details">State Details</string>
     <string name="title_notifications">Notifications</string>
+    <string name="total_positive_cases">Total Positive Cases</string>
+    <string name="total_deaths">Total Deaths</string>
 </resources>

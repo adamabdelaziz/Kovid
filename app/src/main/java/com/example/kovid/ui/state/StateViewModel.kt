@@ -14,9 +14,12 @@ import timber.log.Timber
 class StateViewModel @ViewModelInject constructor(private val repository: CovidRepository) :
     ViewModel() {
 
-    val stateMetadata = repository.getStateMetaData()
-    val US = repository.getCurrentUSValues()
-    val states = repository.getAllStateValues()
+
+        val stateMetadata = repository.getStateMetaData()
+        val US = repository.getCurrentUSValues()
+        val states = repository.getAllStateValues()
+
+
 
 
     private val _id = MutableLiveData<String>()
@@ -35,7 +38,8 @@ class StateViewModel @ViewModelInject constructor(private val repository: CovidR
         Timber.d(id + " VM ")
         Timber.d("getState in VM called")
         //val newID = id.toLowerCase()
-        repository.getCurrentValueForAState(id)
+//        repository.getCurrentValueForAState(id)
+//        repository.getHistoricValuesForAState(id)
         Timber.d("getState in VM finished?")
     }
 }

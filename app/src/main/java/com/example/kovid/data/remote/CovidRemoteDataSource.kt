@@ -11,5 +11,6 @@ class CovidRemoteDataSource @Inject constructor(private val covidService: CovidS
 
     suspend fun getAllStateValues() = getResult { covidService.getAllStateValues() }
     suspend fun getStateMetadata() = getResult { covidService.getStateMetadata() }
-    suspend fun getHistoricValuesForAState(state: String) = getResult { covidService.getHistoricValuesForAState(state) }
+    suspend fun getHistoricValuesForAState(state: String) =
+        getResult { covidService.getHistoricValuesForAState(state) }
 }

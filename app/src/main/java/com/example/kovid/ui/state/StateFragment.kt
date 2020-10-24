@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.example.kovid.MainActivity
 import com.example.kovid.R
 import com.example.kovid.data.entities.StateValue
 import com.example.kovid.databinding.FragmentStateBinding
@@ -19,7 +18,6 @@ import com.yabu.livechart.model.Dataset
 import com.yabu.livechart.view.LiveChart
 import com.yabu.livechart.view.LiveChartStyle
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_state.*
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -46,30 +44,31 @@ class StateFragment : Fragment() {
             stateID = it
             Timber.d(it + "stateFragment onViewCreated called")
         }
+        //setup functions
         setupObservers()
         setupHistoricData(stateID)
-        //setup functions
     }
 
     private fun setupHistoricData(state: String) {
-        var historic = viewModel.getHistoricData(state)
-
+        val historic = viewModel.getHistoricData(state)
+        //Get historic data for a specific date from the viewModel
         historic.observe(viewLifecycleOwner, {
             when (it.status) {
                 Resource.Status.SUCCESS -> {
                     Timber.d("historic data success")
 
                     val list = it.data
-
+                    //I dont think isAdded is necessary here but this plots the data for the chart
+                    // by calling setupChart()
                     if (list != null) {
                         Timber.d("historic list not null")
                         Timber.d(list.size.toString())
-                        if (isAdded) {
+                        if (list.size > 2) {
+                            //this is because for whatever fucking reason the list size will be 1
+                            //and then a few seconds later it will be the correct full length size
                             setupChart(list)
                         }
-
                     }
-
                 }
                 Resource.Status.ERROR -> {
                     Timber.d("historic data error")
@@ -87,21 +86,29 @@ class StateFragment : Fragment() {
                 Resource.Status.SUCCESS -> {
                     Timber.d("sssss metadata SUCCESS")
                     binding.progressBar.visibility = View.GONE
-                    //binding.gridLayout.visibility = View.VISIBLE
+                    binding.linearLayout.visibility = View.VISIBLE
 
                     //using the 2 letter state ID passed in from StateListFragment,
                     // get the actual data you need pertaining to the state and bind it in bindData()
 
                     val list = it.data
+
                     if (list != null) {
+                        Timber.d("list size is " + list.size.toString())
+                        //Not sure why the 0 value isnt the highest date but this ensures it pulls
+                        // the most recent data for the current data section
+                        var highestDate = it.data[0]
                         Timber.d("list not null")
                         for (i in list) {
                             if (i.state == stateID) {
                                 Timber.d("matching state%s", i.state)
-                                bindData(i)
-
+                                Timber.d("date is " + i.date.toString())
+                                if (i.date > highestDate.date) {
+                                    highestDate = i
+                                }
                             }
                         }
+                        bindData(highestDate)
                     }
                 }
 
@@ -112,7 +119,7 @@ class StateFragment : Fragment() {
                 Resource.Status.LOADING -> {
                     Timber.d("stateFragment metadata LOADING")
                     binding.progressBar.visibility = View.VISIBLE
-                   // binding.gridLayout.visibility = View.GONE
+                    binding.linearLayout.visibility = View.GONE
                 }
             }
         })
@@ -131,8 +138,7 @@ class StateFragment : Fragment() {
 
         for ((index, value) in stateList.withIndex()) {
 
-            if(value.positive != null && value.negative != null)
-            {
+            if (value.positive != null && value.negative != null) {
                 val dataPointPos = DataPoint(index.toFloat(), value.positive.toFloat())
                 val dataPointNeg = DataPoint(index.toFloat(), value.negative.toFloat())
                 positives.add(dataPointPos)
@@ -151,11 +157,11 @@ class StateFragment : Fragment() {
         val negativeDataset = Dataset(negatives)
 
         val chartStyle = LiveChartStyle().apply {
-            mainColor = Color.RED
+            mainColor = ContextCompat.getColor(requireContext(), R.color.colorPrimary)
             pathStrokeWidth = 8f
             secondColor = Color.CYAN
             secondPathStrokeWidth = 8f
-            textColor=ContextCompat.getColor(requireContext(),R.color.colorText)
+            textColor = ContextCompat.getColor(requireContext(), R.color.colorText)
         }
 
         liveChart.setDataset(positiveDataset)
@@ -165,9 +171,9 @@ class StateFragment : Fragment() {
             .drawFill(true)
             //.setSecondDataset(negativeDataset)
             .drawSmoothPath()
-            .drawVerticalGuidelines(steps=4)
-            .drawHorizontalGuidelines(steps=4)
-            .setOnTouchCallbackListener(object : LiveChart.OnTouchCallback{
+            .drawVerticalGuidelines(steps = 4)
+            .drawHorizontalGuidelines(steps = 4)
+            .setOnTouchCallbackListener(object : LiveChart.OnTouchCallback {
                 override fun onTouchCallback(point: DataPoint) {
 
                 }
@@ -180,11 +186,20 @@ class StateFragment : Fragment() {
     }
 
     private fun bindData(stateValue: StateValue) {
+
         Timber.d("bindData called")
-        Timber.d(stateValue.hash)
-        Timber.d(stateValue.state)
+        binding.stateValue = stateValue
 
-
+//        val oldDate = stateValue.date.toString()
+//        val year = oldDate.subSequence(0, 4).toString()
+//        val month = oldDate.subSequence(4,6).toString()
+//        val day = oldDate.subSequence(6,8).toString()
+//
+//        Timber.d(year+ " year")
+//        Timber.d(month+ " month")
+//        Timber.d(day + " day")
+//
+//        stateValue.newDate = year + "/" + month + "/" + day
 
     }
 }

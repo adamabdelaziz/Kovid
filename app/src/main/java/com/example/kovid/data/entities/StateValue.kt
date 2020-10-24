@@ -1,7 +1,6 @@
 package com.example.kovid.data.entities
 
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 
 @Entity(tableName = "StateValues", primaryKeys = ["date", "state"])
 data class StateValue(

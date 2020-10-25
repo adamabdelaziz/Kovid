@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.example.kovid.R
 import com.example.kovid.data.entities.StateValue
 import com.example.kovid.databinding.FragmentStateBinding
@@ -40,13 +39,14 @@ class StateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.getString("id")?.let {
-            viewModel.getState(it)
+            //viewModel.getState(it)
             stateID = it
             Timber.d(it + "stateFragment onViewCreated called")
         }
         //setup functions
-        setupObservers()
+        // setupObservers()
         setupHistoricData(stateID)
+        setupObservers(stateID)
     }
 
     private fun setupHistoricData(state: String) {
@@ -80,29 +80,19 @@ class StateFragment : Fragment() {
         })
     }
 
-    private fun setupObservers() {
-        viewModel.states.observe(viewLifecycleOwner, Observer {
+    private fun setupObservers(state: String) {
+        val current = viewModel.getCurrentData(state)
+        current.observe(viewLifecycleOwner, {
             when (it.status) {
                 Resource.Status.SUCCESS -> {
-                    Timber.d("sssss metadata SUCCESS")
                     binding.progressBar.visibility = View.GONE
                     binding.linearLayout.visibility = View.VISIBLE
-
-                    //using the 2 letter state ID passed in from StateListFragment,
-                    // get the actual data you need pertaining to the state and bind it in bindData()
-
+                    Timber.d("historic data success")
                     val list = it.data
-
                     if (list != null) {
-                        Timber.d("list size is " + list.size.toString())
-                        //Not sure why the 0 value isnt the highest date but this ensures it pulls
-                        // the most recent data for the current data section
                         var highestDate = it.data[0]
-                        Timber.d("list not null")
                         for (i in list) {
                             if (i.state == stateID) {
-                                Timber.d("matching state%s", i.state)
-                                Timber.d("date is " + i.date.toString())
                                 if (i.date > highestDate.date) {
                                     highestDate = i
                                 }
@@ -111,19 +101,61 @@ class StateFragment : Fragment() {
                         bindData(highestDate)
                     }
                 }
-
                 Resource.Status.ERROR -> {
-                    Timber.d("stateFragment metadata  ERROR")
-
+                    Timber.d("historic data error")
                 }
                 Resource.Status.LOADING -> {
-                    Timber.d("stateFragment metadata LOADING")
+                    Timber.d("historic data loading")
                     binding.progressBar.visibility = View.VISIBLE
                     binding.linearLayout.visibility = View.GONE
                 }
             }
         })
     }
+//    private fun setupObservers() {
+//        viewModel.states.observe(viewLifecycleOwner, Observer {
+//            when (it.status) {
+//                Resource.Status.SUCCESS -> {
+//                    Timber.d("sssss metadata SUCCESS")
+//                    binding.progressBar.visibility = View.GONE
+//                    binding.linearLayout.visibility = View.VISIBLE
+//
+//                    //using the 2 letter state ID passed in from StateListFragment,
+//                    // get the actual data you need pertaining to the state and bind it in bindData()
+//
+//                    val list = it.data
+//
+//                    if (list != null) {
+//                        Timber.d("list size is " + list.size.toString())
+//                        //Not sure why the 0 value isnt the highest date but this ensures it pulls
+//                        // the most recent data for the current data section
+//                        var highestDate = it.data[0]
+//                        Timber.d("list not null")
+//                        for (i in list) {
+//                            if (i.state == stateID) {
+//                                Timber.d("matching state%s", i.state)
+//                                Timber.d("date is " + i.date.toString())
+//                                if (i.date > highestDate.date) {
+//                                    highestDate = i
+//                                }
+//                            }
+//                        }
+//                        bindData(highestDate)
+//                    }
+//                }
+//
+//                Resource.Status.ERROR -> {
+//                    Timber.d("stateFragment metadata  ERROR")
+//
+//                }
+//                Resource.Status.LOADING -> {
+//                    Timber.d("stateFragment metadata LOADING")
+//                    binding.progressBar.visibility = View.VISIBLE
+//                    binding.linearLayout.visibility = View.GONE
+//                }
+//            }
+//        })
+//    }
 
     private fun setupChart(stateValueList: List<StateValue>) {
         val liveChart = binding.liveChart

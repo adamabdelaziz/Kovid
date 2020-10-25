@@ -39,6 +39,9 @@ interface CovidService {
     @GET("/v1/states/info.json")
     suspend fun getStateMetadata(): Response<List<StateMetadata>>
 
+    @GET("/v1/states/{state}/current.json")
+    suspend fun getCurrentValuesForAState(@Path("state") state: String): Response<List<StateValue>>
+
     @GET("/v1/states/{state}/daily.json")
     suspend fun getHistoricValuesForAState(@Path("state") state: String): Response<List<StateValue>>
 }

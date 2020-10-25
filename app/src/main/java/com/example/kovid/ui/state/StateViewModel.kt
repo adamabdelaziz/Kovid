@@ -33,6 +33,9 @@ class StateViewModel @ViewModelInject constructor(private val repository: CovidR
     fun getHistoricData(state: String): LiveData<Resource<List<StateValue>>> {
         return repository.getHistoricValuesForAState(state)
     }
+    fun getCurrentData(state:String): LiveData<Resource<List<StateValue>>>{
+        return repository.getCurrentValuesForAState(state)
+    }
 
     fun getState(id: String) {
         Timber.d(id + " VM ")

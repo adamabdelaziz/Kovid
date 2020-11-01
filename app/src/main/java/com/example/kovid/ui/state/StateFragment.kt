@@ -17,6 +17,7 @@ import com.yabu.livechart.model.Dataset
 import com.yabu.livechart.view.LiveChart
 import com.yabu.livechart.view.LiveChartStyle
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_state.*
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -45,8 +46,9 @@ class StateFragment : Fragment() {
         }
         //setup functions
         // setupObservers()
-        setupHistoricData(stateID)
         setupObservers(stateID)
+        setupHistoricData(stateID)
+
     }
 
     private fun setupHistoricData(state: String) {
@@ -87,31 +89,132 @@ class StateFragment : Fragment() {
                 Resource.Status.SUCCESS -> {
                     binding.progressBar.visibility = View.GONE
                     binding.linearLayout.visibility = View.VISIBLE
-                    Timber.d("historic data success")
-                    val list = it.data
-                    if (list != null) {
-                        var highestDate = it.data[0]
-                        for (i in list) {
-                            if (i.state == stateID) {
-                                if (i.date > highestDate.date) {
-                                    highestDate = i
-                                }
-                            }
-                        }
-                        bindData(highestDate)
+
+                    Timber.d("observers success")
+                    val data = it.data
+
+                    if (data != null) {
+                        Timber.d("binding data")
+                        bindData(data)
                     }
+
                 }
                 Resource.Status.ERROR -> {
-                    Timber.d("historic data error")
+                    Timber.d("observer  error")
                 }
                 Resource.Status.LOADING -> {
-                    Timber.d("historic data loading")
+                    Timber.d("observer loading")
                     binding.progressBar.visibility = View.VISIBLE
                     binding.linearLayout.visibility = View.GONE
                 }
             }
         })
     }
+
+    private fun setupChart(stateValueList: List<StateValue>) {
+        val liveChart = binding.liveChart
+        val positives = mutableListOf<DataPoint>()
+        val negatives = mutableListOf<DataPoint>()
+        // val totalTests = mutableListOf<DataPoint>()
+        positives.clear()
+        negatives.clear()
+        Timber.d("setup chart called")
+
+        // need to go through the list from the back
+        val stateList = stateValueList.reversed()
+
+        for ((index, value) in stateList.withIndex()) {
+            if (value.positive != null && value.negative != null && value.totalTestResults != null) {
+                val dataPointPos = DataPoint(index.toFloat(), value.positive.toFloat())
+                val dataPointNeg = DataPoint(index.toFloat(), value.negative.toFloat())
+                //val dataPointTests = DataPoint(index.toFloat(), value.totalTestResults.toFloat())
+                positives.add(dataPointPos)
+                negatives.add(dataPointNeg)
+                //totalTests.add(dataPointTests)
+            }
+
+            Timber.d(index.toString() + " index")
+            Timber.d(value.positive.toString() + " positive")
+            Timber.d(value.negative.toString() + " negative")
+            Timber.d(positives.size.toString() + " positives list size")
+            Timber.d(negatives.size.toString() + " negatives list size")
+
+        }
+
+        val positiveDataset = Dataset(positives)
+        //val negativeDataset = Dataset(negatives)
+        //val testsDataset = Dataset(totalTests)
+
+        val chartStyle = LiveChartStyle().apply {
+            mainColor = ContextCompat.getColor(requireContext(), R.color.colorPrimary)
+            pathStrokeWidth = 8f
+            secondColor = Color.CYAN
+            secondPathStrokeWidth = 8f
+            textColor = ContextCompat.getColor(requireContext(), R.color.colorText)
+        }
+
+        liveChart.setDataset(positiveDataset)
+            .setLiveChartStyle(chartStyle)
+            .drawBaseline()
+            //.drawYBounds()
+            .drawFill(true)
+            //.setSecondDataset(testsDataset)
+            .drawSmoothPath()
+            .drawVerticalGuidelines(steps = 4)
+            .drawHorizontalGuidelines(steps = 4)
+            .setOnTouchCallbackListener(object : LiveChart.OnTouchCallback {
+                override fun onTouchCallback(point: DataPoint) {
+                    //Display specific data here based on what point the user touches
+
+                    Timber.d(point.x.toString() + " x")
+                    Timber.d(point.y.toString() + " y")
+                    Timber.d(stateList[point.x.toInt()].date.toString())
+                    Timber.d(stateList[point.x.toInt()].positive.toString())
+
+                    val value = stateList[point.x.toInt()]
+
+                    bottom_card_four_body.text = value.date.toString()
+                    bottom_card_three_body.text = value.totalTestResults.toString()
+                    if (value.death.toString() != "null" || value.death != null) {
+                        bottom_card_two_body.text = value.death.toString()
+                    } else {
+                        bottom_card_two_body.text = "0"
+                    }
+                    bottom_card_one_body.text = value.positive.toString()
+
+
+                }
+
+                override fun onTouchFinished() {
+//                    bottom_card_four_body.text = ""
+//                    bottom_card_three_body.text =""
+//                    bottom_card_two_body.text = ""
+//                    bottom_card_one_body.text =""
+                }
+            })
+            .drawDataset()
+    }
+
+    private fun bindData(stateValue: StateValue) {
+
+        Timber.d("bindData called")
+        binding.stateValue = stateValue
+
+//        val oldDate = stateValue.date.toString()
+//        val year = oldDate.subSequence(0, 4).toString()
+//        val month = oldDate.subSequence(4,6).toString()
+//        val day = oldDate.subSequence(6,8).toString()
+//
+//        Timber.d(year+ " year")
+//        Timber.d(month+ " month")
+//        Timber.d(day + " day")
+//
+//        stateValue.newDate = year + "/" + month + "/" + day
+
+    }
+}
+
+
 //    private fun setupObservers() {
 //        viewModel.states.observe(viewLifecycleOwner, Observer {
 //            when (it.status) {
@@ -157,81 +260,3 @@ class StateFragment : Fragment() {
 //        })
 //    }
 
-    private fun setupChart(stateValueList: List<StateValue>) {
-        val liveChart = binding.liveChart
-        val positives = mutableListOf<DataPoint>()
-        val negatives = mutableListOf<DataPoint>()
-        positives.clear()
-        negatives.clear()
-        Timber.d("setup chart called")
-
-        // need to go through the list from the back
-        val stateList = stateValueList.reversed()
-
-        for ((index, value) in stateList.withIndex()) {
-
-            if (value.positive != null && value.negative != null) {
-                val dataPointPos = DataPoint(index.toFloat(), value.positive.toFloat())
-                val dataPointNeg = DataPoint(index.toFloat(), value.negative.toFloat())
-                positives.add(dataPointPos)
-                negatives.add(dataPointNeg)
-            }
-
-            Timber.d(index.toString() + " index")
-            Timber.d(value.positive.toString() + " positive")
-            Timber.d(value.negative.toString() + " negative")
-            Timber.d(positives.size.toString() + " positives list size")
-            Timber.d(negatives.size.toString() + " negatives list size")
-
-        }
-
-        val positiveDataset = Dataset(positives)
-        val negativeDataset = Dataset(negatives)
-
-        val chartStyle = LiveChartStyle().apply {
-            mainColor = ContextCompat.getColor(requireContext(), R.color.colorPrimary)
-            pathStrokeWidth = 8f
-            secondColor = Color.CYAN
-            secondPathStrokeWidth = 8f
-            textColor = ContextCompat.getColor(requireContext(), R.color.colorText)
-        }
-
-        liveChart.setDataset(positiveDataset)
-            .setLiveChartStyle(chartStyle)
-            .drawBaseline()
-            .drawYBounds()
-            .drawFill(true)
-            //.setSecondDataset(negativeDataset)
-            .drawSmoothPath()
-            .drawVerticalGuidelines(steps = 4)
-            .drawHorizontalGuidelines(steps = 4)
-            .setOnTouchCallbackListener(object : LiveChart.OnTouchCallback {
-                override fun onTouchCallback(point: DataPoint) {
-
-                }
-
-                override fun onTouchFinished() {
-
-                }
-            })
-            .drawDataset()
-    }
-
-    private fun bindData(stateValue: StateValue) {
-
-        Timber.d("bindData called")
-        binding.stateValue = stateValue
-
-//        val oldDate = stateValue.date.toString()
-//        val year = oldDate.subSequence(0, 4).toString()
-//        val month = oldDate.subSequence(4,6).toString()
-//        val day = oldDate.subSequence(6,8).toString()
-//
-//        Timber.d(year+ " year")
-//        Timber.d(month+ " month")
-//        Timber.d(day + " day")
-//
-//        stateValue.newDate = year + "/" + month + "/" + day
-
-    }
-}

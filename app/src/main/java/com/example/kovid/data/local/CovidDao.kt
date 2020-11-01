@@ -31,7 +31,7 @@ interface CovidDao {
     fun getHistoricValuesForAState(state: String): LiveData<List<StateValue>>
 
     @Query("SELECT * FROM StateValues WHERE state =:state")
-    fun getCurrentValuesForAState(state: String): LiveData<List<StateValue>>
+    fun getCurrentValuesForAState(state: String): LiveData<StateValue>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertHistoricValuesForAState(
@@ -39,9 +39,7 @@ interface CovidDao {
     )
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCurrentValuesForAState(
-        listOfStateValue: List<StateValue>
-    )
+    suspend fun insertCurrentValuesForAState(stateValue: StateValue)
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

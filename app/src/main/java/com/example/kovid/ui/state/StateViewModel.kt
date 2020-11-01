@@ -33,7 +33,7 @@ class StateViewModel @ViewModelInject constructor(private val repository: CovidR
     fun getHistoricData(state: String): LiveData<Resource<List<StateValue>>> {
         return repository.getHistoricValuesForAState(state)
     }
-    fun getCurrentData(state:String): LiveData<Resource<List<StateValue>>>{
+    fun getCurrentData(state:String): LiveData<Resource<StateValue>>{
         return repository.getCurrentValuesForAState(state)
     }
 

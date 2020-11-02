@@ -25,7 +25,7 @@
         android:id="@+id/navigation_state"
         android:name="com.example.kovid.ui.state.StateFragment"
         android:label="@string/title_state_details"
-        tools:layout="@layout/fragment_state" />
+        tools:layout="@layout/fragment_stateOLD" />
 
 <!--    <fragment-->
 <!--        android:id="@+id/navigation_notifications"-->

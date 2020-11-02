@@ -88,7 +88,7 @@ class StateFragment : Fragment() {
             when (it.status) {
                 Resource.Status.SUCCESS -> {
                     binding.progressBar.visibility = View.GONE
-                    binding.linearLayout.visibility = View.VISIBLE
+                    binding.constraintLayout.visibility = View.VISIBLE
 
                     Timber.d("observers success")
                     val data = it.data
@@ -105,7 +105,7 @@ class StateFragment : Fragment() {
                 Resource.Status.LOADING -> {
                     Timber.d("observer loading")
                     binding.progressBar.visibility = View.VISIBLE
-                    binding.linearLayout.visibility = View.GONE
+                    binding.constraintLayout.visibility = View.GONE
                 }
             }
         })
@@ -173,14 +173,14 @@ class StateFragment : Fragment() {
 
                     val value = stateList[point.x.toInt()]
 
-                    bottom_card_four_body.text = value.date.toString()
-                    bottom_card_three_body.text = value.totalTestResults.toString()
+                    bottom_body_four.text = value.date.toString()
+                    bottom_body_three.text = value.positiveIncrease.toString()
                     if (value.death.toString() != "null" || value.death != null) {
-                        bottom_card_two_body.text = value.death.toString()
+                        bottom_body_two.text = value.death.toString()
                     } else {
-                        bottom_card_two_body.text = "0"
+                        bottom_body_two.text = "0"
                     }
-                    bottom_card_one_body.text = value.positive.toString()
+                    bottom_body_one.text = value.positive.toString() +"("+ value.totalTestResults.toString() + ")"
 
 
                 }

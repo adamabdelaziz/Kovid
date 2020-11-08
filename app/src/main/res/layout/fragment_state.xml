@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -10,31 +10,51 @@
             type="com.example.kovid.data.entities.StateValue" />
     </data>
 
-    <FrameLayout
+    <!--    <FrameLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent">-->
+
+
+    <!--        <ProgressBar-->
+    <!--            android:id="@+id/progress_bar"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:gravity="center"-->
+
+    <!--            />-->
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-
-            />
-
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/colorBackground">
 
+            <TextView
+                android:id="@+id/main_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:text="@string/todays_data"
+                android:textAlignment="center"
+                android:textColor="@color/colorText"
+                android:textSize="24sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/top_header_one"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/total_positive_cases"
                 android:textAlignment="center"
@@ -42,14 +62,14 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/main_title" />
 
             <TextView
                 android:id="@+id/top_body_one"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="sans-serif-light"
                 android:text='@{Integer.toString(stateValue.positive) + " (" + (Integer.toString(stateValue.totalTestResults)) +")"}'
                 android:textAlignment="center"
@@ -67,20 +87,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="32dp"
+                android:layout_marginEnd="16dp"
                 android:text="@string/total_deaths"
                 android:textAlignment="center"
                 android:textColor="@color/colorText"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/main_title" />
 
             <TextView
                 android:id="@+id/top_body_two"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="sans-serif-light"
                 android:text="@{Integer.toString(stateValue.death)}"
@@ -114,7 +134,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="sans-serif-light"
                 android:text="@{Integer.toString(stateValue.positiveIncrease)}"
                 android:textAlignment="center"
@@ -145,7 +165,7 @@
                 android:id="@+id/top_body_four"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="sans-serif-light"
                 android:text="@{Integer.toString(stateValue.deathIncrease)}"
@@ -158,6 +178,22 @@
                 app:layout_constraintTop_toBottomOf="@+id/top_header_four"
                 tools:text="886865" />
 
+            <TextView
+                android:id="@+id/chart_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/positive_covid_19_cases_over_time"
+                android:textAlignment="center"
+                android:textColor="@color/colorText"
+                android:textSize="24sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/top_body_three" />
+
 
             <com.yabu.livechart.view.LiveChart
                 android:id="@+id/live_chart"
@@ -166,12 +202,12 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                app:layout_constraintBottom_toTopOf="@+id/bottom_header_one"
+                android:layout_marginBottom="32dp"
+                app:layout_constraintBottom_toTopOf="@id/bottom_header_one"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/chart_title">
+                app:layout_constraintTop_toBottomOf="@id/chart_title">
 
 
             </com.yabu.livechart.view.LiveChart>
@@ -181,7 +217,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:text="@string/total_positive_cases"
                 android:textAlignment="center"
                 android:textColor="@color/colorText"
@@ -195,7 +231,7 @@
                 android:id="@+id/bottom_header_two"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="16dp"
                 android:text="@string/deaths"
                 android:textAlignment="center"
@@ -203,31 +239,31 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/top_header_two"
-                app:layout_constraintTop_toBottomOf="@+id/live_chart" />
+                app:layout_constraintStart_toStartOf="@id/top_header_two"
+                app:layout_constraintTop_toBottomOf="@id/live_chart" />
 
             <TextView
                 android:id="@+id/bottom_body_one"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="sans-serif-light"
                 android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp"
                 android:textStyle="bold|italic"
-                app:layout_constraintEnd_toEndOf="@+id/top_header_one"
+                app:layout_constraintEnd_toEndOf="@id/top_header_one"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bottom_header_one"
+                app:layout_constraintTop_toBottomOf="@id/bottom_header_one"
                 tools:text="test" />
 
             <TextView
                 android:id="@+id/bottom_body_two"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="sans-serif-light"
                 android:text=""
@@ -236,8 +272,8 @@
                 android:textSize="18sp"
                 android:textStyle="bold|italic"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/top_header_two"
-                app:layout_constraintTop_toBottomOf="@+id/bottom_header_two"
+                app:layout_constraintStart_toStartOf="@id/top_header_two"
+                app:layout_constraintTop_toBottomOf="@id/bottom_header_two"
                 tools:text="test" />
 
             <TextView
@@ -245,7 +281,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/positive_increase"
                 android:textAlignment="center"
                 android:textColor="@color/colorText"
@@ -260,7 +296,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="sans-serif-light"
                 android:text=""
                 android:textAlignment="center"
@@ -276,7 +312,7 @@
                 android:id="@+id/bottom_header_four"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:text="@string/date_selected"
                 android:textAlignment="center"
@@ -292,7 +328,7 @@
                 android:id="@+id/bottom_body_four"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="sans-serif-light"
                 android:text=""
@@ -305,38 +341,215 @@
                 app:layout_constraintTop_toBottomOf="@+id/bottom_header_four"
                 tools:text="test" />
 
-            <TextView
-                android:id="@+id/chart_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+
+            <com.yabu.livechart.view.LiveChart
+                android:id="@+id/live_chart_two"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="@string/positive_covid_19_cases_over_time"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chart_two_title" />
+
+
+            <TextView
+                android:id="@+id/lower_header_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/hospitalizations"
+                android:textAlignment="center"
+                android:textColor="@color/colorText"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/top_header_one"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/live_chart_two" />
+
+            <TextView
+                android:id="@+id/chart_two_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/hospitalizations_over_time"
                 android:textAlignment="center"
                 android:textColor="@color/colorText"
                 android:textSize="24sp"
                 android:textStyle="bold|italic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/top_body_three" />
+                app:layout_constraintTop_toBottomOf="@+id/bottom_body_three" />
 
-<!--            <TextView-->
-<!--                android:id="@+id/bottom_text"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginBottom="48dp"-->
-<!--                android:fontFamily="sans-serif-light"-->
-<!--                android:text='@{Integer.toString(stateValue.dateChecked)+ " last updated"'-->
-<!--                android:textAlignment="center"-->
-<!--                android:textStyle="italic"-->
-<!--                android:textSize="14sp"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent" />-->
+            <TextView
+                android:id="@+id/lower_header_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/date_selected"
+                android:textAlignment="center"
+                android:textColor="@color/colorText"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.583"
+                app:layout_constraintStart_toStartOf="@+id/top_header_two"
+                app:layout_constraintTop_toBottomOf="@+id/live_chart_two" />
+
+            <TextView
+                android:id="@+id/lower_body_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text=""
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintEnd_toEndOf="@+id/top_header_one"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lower_header_one" />
+
+            <TextView
+                android:id="@+id/lower_body_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text=""
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/top_header_two"
+
+                app:layout_constraintTop_toBottomOf="@+id/lower_header_two" />
+
+            <com.yabu.livechart.view.LiveChart
+                android:id="@+id/live_chart_three"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chart_three_title" />
+
+
+            <TextView
+                android:id="@+id/chart_three_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/deaths_over_time"
+                android:textAlignment="center"
+                android:textColor="@color/colorText"
+                android:textSize="24sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lower_body_one" />
+
+            <TextView
+                android:id="@+id/lowest_header_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/deaths"
+                android:textAlignment="center"
+                android:textColor="@color/colorText"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/top_header_one"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/live_chart_three" />
+
+            <TextView
+                android:id="@+id/lowest_body_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text=""
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintEnd_toEndOf="@+id/top_header_one"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lowest_header_one" />
+
+            <TextView
+                android:id="@+id/lowest_header_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/date_selected"
+                android:textAlignment="center"
+                android:textColor="@color/colorText"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/top_header_two"
+                app:layout_constraintTop_toBottomOf="@+id/live_chart_three" />
+
+            <TextView
+                android:id="@+id/lowest_body_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text=""
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/top_header_two"
+                app:layout_constraintTop_toBottomOf="@+id/lowest_header_two" />
+
+            <TextView
+                android:id="@+id/last_updated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="100dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lowest_body_one"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/bottom_text"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginBottom="48dp"-->
+            <!--                android:fontFamily="sans-serif-light"-->
+            <!--                android:text='@{Integer.toString(stateValue.dateChecked)+ " last updated"'-->
+            <!--                android:textAlignment="center"-->
+            <!--                android:textStyle="italic"-->
+            <!--                android:textSize="14sp"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent" />-->
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </FrameLayout>
+    </ScrollView>
+    <!--    </FrameLayout>-->
 </layout>

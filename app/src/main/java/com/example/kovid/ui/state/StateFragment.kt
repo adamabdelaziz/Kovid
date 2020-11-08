@@ -87,7 +87,7 @@ class StateFragment : Fragment() {
         current.observe(viewLifecycleOwner, {
             when (it.status) {
                 Resource.Status.SUCCESS -> {
-                    binding.progressBar.visibility = View.GONE
+                    //binding.progressBar.visibility = View.GONE
                     binding.constraintLayout.visibility = View.VISIBLE
 
                     Timber.d("observers success")
@@ -104,7 +104,7 @@ class StateFragment : Fragment() {
                 }
                 Resource.Status.LOADING -> {
                     Timber.d("observer loading")
-                    binding.progressBar.visibility = View.VISIBLE
+                    //binding.progressBar.visibility = View.VISIBLE
                     binding.constraintLayout.visibility = View.GONE
                 }
             }
@@ -112,38 +112,39 @@ class StateFragment : Fragment() {
     }
 
     private fun setupChart(stateValueList: List<StateValue>) {
-        val liveChart = binding.liveChart
-        val positives = mutableListOf<DataPoint>()
-        val negatives = mutableListOf<DataPoint>()
-        // val totalTests = mutableListOf<DataPoint>()
-        positives.clear()
-        negatives.clear()
         Timber.d("setup chart called")
+
+        val liveChart = binding.liveChart
+        val liveChartTwo = binding.liveChartTwo
+        val liveChartThree = binding.liveChartThree
+
+        val positives = mutableListOf<DataPoint>()
+        val hospitializations = mutableListOf<DataPoint>()
+        val deaths = mutableListOf<DataPoint>()
+
+        positives.clear()
+        hospitializations.clear()
+        deaths.clear()
 
         // need to go through the list from the back
         val stateList = stateValueList.reversed()
 
         for ((index, value) in stateList.withIndex()) {
-            if (value.positive != null && value.negative != null && value.totalTestResults != null) {
+            if (value.positive != null && value.totalTestResults != null && value.hospitalizedCurrently != null && value.death != null) {
                 val dataPointPos = DataPoint(index.toFloat(), value.positive.toFloat())
-                val dataPointNeg = DataPoint(index.toFloat(), value.negative.toFloat())
-                //val dataPointTests = DataPoint(index.toFloat(), value.totalTestResults.toFloat())
+                val dataPointHosp =
+                    DataPoint(index.toFloat(), value.hospitalizedCurrently.toFloat())
+                val dataPointDeath = DataPoint(index.toFloat(), value.death.toFloat())
+
                 positives.add(dataPointPos)
-                negatives.add(dataPointNeg)
-                //totalTests.add(dataPointTests)
+                hospitializations.add(dataPointHosp)
+                deaths.add(dataPointDeath)
             }
-
-            Timber.d(index.toString() + " index")
-            Timber.d(value.positive.toString() + " positive")
-            Timber.d(value.negative.toString() + " negative")
-            Timber.d(positives.size.toString() + " positives list size")
-            Timber.d(negatives.size.toString() + " negatives list size")
-
         }
 
         val positiveDataset = Dataset(positives)
-        //val negativeDataset = Dataset(negatives)
-        //val testsDataset = Dataset(totalTests)
+        val hospitalizationDataset = Dataset(hospitializations)
+        val deathDataset = Dataset(deaths)
 
         val chartStyle = LiveChartStyle().apply {
             mainColor = ContextCompat.getColor(requireContext(), R.color.colorPrimary)
@@ -153,18 +154,20 @@ class StateFragment : Fragment() {
             textColor = ContextCompat.getColor(requireContext(), R.color.colorText)
         }
 
+
         liveChart.setDataset(positiveDataset)
             .setLiveChartStyle(chartStyle)
             .drawBaseline()
-            //.drawYBounds()
             .drawFill(true)
-            //.setSecondDataset(testsDataset)
             .drawSmoothPath()
             .drawVerticalGuidelines(steps = 4)
             .drawHorizontalGuidelines(steps = 4)
             .setOnTouchCallbackListener(object : LiveChart.OnTouchCallback {
                 override fun onTouchCallback(point: DataPoint) {
                     //Display specific data here based on what point the user touches
+                    liveChart
+                        .parent
+                        .requestDisallowInterceptTouchEvent(true)
 
                     Timber.d(point.x.toString() + " x")
                     Timber.d(point.y.toString() + " y")
@@ -180,19 +183,70 @@ class StateFragment : Fragment() {
                     } else {
                         bottom_body_two.text = "0"
                     }
-                    bottom_body_one.text = value.positive.toString() +"("+ value.totalTestResults.toString() + ")"
+                    bottom_body_one.text =
+                        value.positive.toString() + "(" + value.totalTestResults.toString() + ")"
 
 
                 }
 
                 override fun onTouchFinished() {
-//                    bottom_card_four_body.text = ""
-//                    bottom_card_three_body.text =""
-//                    bottom_card_two_body.text = ""
-//                    bottom_card_one_body.text =""
+                    liveChart.parent.requestDisallowInterceptTouchEvent(true)
                 }
             })
             .drawDataset()
+
+        liveChartTwo.setDataset(hospitalizationDataset)
+            .setLiveChartStyle(chartStyle)
+            .drawBaseline()
+            .drawFill(true)
+            .drawSmoothPath()
+            .drawVerticalGuidelines(steps = 4)
+            .drawHorizontalGuidelines(steps = 4)
+            .setOnTouchCallbackListener(object : LiveChart.OnTouchCallback {
+                override fun onTouchCallback(point: DataPoint) {
+                    liveChart.parent.requestDisallowInterceptTouchEvent(true)
+
+                    val value = stateList[point.x.toInt()]
+                    if (value.hospitalizedCurrently.toString() != "null" || value.hospitalizedCurrently != null) {
+                        lower_body_one.text = value.hospitalizedCurrently.toString()
+                    } else {
+                        lower_body_one.text = "0"
+                    }
+                    lower_body_two.text = value.date.toString()
+                }
+
+                override fun onTouchFinished() {
+                    liveChart.parent.requestDisallowInterceptTouchEvent(true)
+                }
+            })
+            .drawDataset()
+
+        liveChartThree.setDataset(deathDataset)
+            .setLiveChartStyle(chartStyle)
+            .drawBaseline()
+            .drawFill(true)
+            .drawSmoothPath()
+            .drawVerticalGuidelines(steps = 4)
+            .drawHorizontalGuidelines(steps = 4)
+            .setOnTouchCallbackListener(object : LiveChart.OnTouchCallback {
+                override fun onTouchCallback(point: DataPoint) {
+                    liveChart.parent.requestDisallowInterceptTouchEvent(true)
+                    val value = stateList[point.x.toInt()]
+
+                    if (value.death.toString() != "null" || value.death != null) {
+                        lowest_body_one.text = value.death.toString()
+                    } else {
+                        lowest_body_one.text = "0"
+                    }
+                    lowest_body_two.text = value.date.toString()
+                }
+
+                override fun onTouchFinished() {
+                    liveChart.parent.requestDisallowInterceptTouchEvent(true)
+                }
+            })
+            .drawDataset()
+
     }
 
     private fun bindData(stateValue: StateValue) {

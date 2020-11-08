@@ -4,7 +4,7 @@
     <string name="title_state_list">States</string>
     <string name="title_state_details">State Details</string>
     <string name="title_notifications">Notifications</string>
-    <string name="total_positive_cases">Positive Cases (Total)</string>
+    <string name="total_positive_cases">Positive Results (Total)</string>
     <string name="total_deaths">Total Deaths</string>
     <string name="deaths">Deaths</string>
     <string name="test_results">Test Results</string>
@@ -15,4 +15,8 @@
     <string name="last_checked">Last Checked</string>
     <string name="death_increase">Death Increase</string>
     <string name="positive_increase">Positive Increase</string>
+    <string name="todays_data">Today\'s Data</string>
+    <string name="hospitalizations_over_time">Hospitalizations Over Time</string>
+    <string name="hospitalizations">Hospitalizations</string>
+    <string name="deaths_over_time">COVID-19 Deaths Over Time</string>
 </resources>

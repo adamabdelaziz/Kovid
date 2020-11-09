@@ -64,8 +64,8 @@ class StateFragment : Fragment() {
                     // by calling setupChart()
                     if (list != null) {
                         Timber.d("historic list not null")
-                        Timber.d(list.size.toString())
-                        if (list.size > 2) {
+                        Timber.d(list.size.toString() +  " historic list size")
+                        if (list.size > 10) {
                             //this is because for whatever fucking reason the list size will be 1
                             //and then a few seconds later it will be the correct full length size
                             setupChart(list)

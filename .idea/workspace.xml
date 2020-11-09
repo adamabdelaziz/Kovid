@@ -29,21 +29,19 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/kovid/data/local/CovidDao.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/kovid/data/local/CovidDao.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/kovid/data/remote/CovidRemoteDataSource.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/kovid/data/remote/CovidRemoteDataSource.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/kovid/data/remote/CovidService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/kovid/data/remote/CovidService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/kovid/data/repository/CovidRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/kovid/data/repository/CovidRepository.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/kovid/ui/country/CountryFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/kovid/ui/country/CountryFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/kovid/ui/country/CountryViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/kovid/ui/country/CountryViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/kovid/ui/state/StateViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/kovid/ui/state/StateViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/kovid/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/kovid/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/kovid/data/local/AppDatabase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/kovid/data/local/AppDatabase.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/kovid/ui/state/StateFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/kovid/ui/state/StateFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_country.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_country.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[emulator-5554]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[899Y04W6A]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -89,8 +87,10 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android-custom-viewC:/Users/Adam/.gradle/caches/modules-2/files-2.1/com.github.Pfuster12/LiveChart/1.3.4/c71daeddf7845ff2810bcffa7b5e10c28f4f33d2/LiveChart-1.3.4-sources.jar!/com/yabu/livechart/view/LiveChartTouchOverlay.kt_SELECTED" value="LiveChartTouchOverlay" />
+    <property name="android-custom-viewC:/Users/Adam/.gradle/caches/modules-2/files-2.1/com.google.android.material/material/1.2.1/37d55d5141066b3d118d24232fa7025b65eb3a74/material-1.2.1-sources.jar!/com/google/android/material/card/MaterialCardView.java_SELECTED" value="MaterialCardView" />
     <property name="android.sdk.path" value="$PROJECT_DIR$/../../Android/sdk" />
     <property name="multi-representation-previewC:/Users/Adam/.gradle/caches/modules-2/files-2.1/com.github.Pfuster12/LiveChart/1.3.4/c71daeddf7845ff2810bcffa7b5e10c28f4f33d2/LiveChart-1.3.4-sources.jar!/com/yabu/livechart/view/LiveChartTouchOverlay.kt_selected" value="Custom views" />
+    <property name="multi-representation-previewC:/Users/Adam/.gradle/caches/modules-2/files-2.1/com.google.android.material/material/1.2.1/37d55d5141066b3d118d24232fa7025b65eb3a74/material-1.2.1-sources.jar!/com/google/android/material/card/MaterialCardView.java_selected" value="Custom views" />
     <property name="project.structure.last.edited" value="Variables" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -217,22 +217,22 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1051" y="449" key="FileChooserDialogImpl/0.0.2560.1400/2560.0.1920.1040@0.0.2560.1400" timestamp="1604175632423" />
-    <state width="2517" height="227" key="GridCell.Tab.0.bottom" timestamp="1604786865406">
+    <state width="2517" height="452" key="GridCell.Tab.0.bottom" timestamp="1604895738548">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="227" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1920.1040@0.0.2560.1400" timestamp="1604786865406" />
-    <state width="2517" height="227" key="GridCell.Tab.0.center" timestamp="1604786865406">
+    <state width="2517" height="452" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1920.1040@0.0.2560.1400" timestamp="1604895738548" />
+    <state width="2517" height="452" key="GridCell.Tab.0.center" timestamp="1604895738548">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="227" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1920.1040@0.0.2560.1400" timestamp="1604786865406" />
-    <state width="2517" height="227" key="GridCell.Tab.0.left" timestamp="1604786865405">
+    <state width="2517" height="452" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1920.1040@0.0.2560.1400" timestamp="1604895738548" />
+    <state width="2517" height="452" key="GridCell.Tab.0.left" timestamp="1604895738548">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="227" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1920.1040@0.0.2560.1400" timestamp="1604786865405" />
-    <state width="2517" height="227" key="GridCell.Tab.0.right" timestamp="1604786865406">
+    <state width="2517" height="452" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1920.1040@0.0.2560.1400" timestamp="1604895738548" />
+    <state width="2517" height="452" key="GridCell.Tab.0.right" timestamp="1604895738548">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="227" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1920.1040@0.0.2560.1400" timestamp="1604786865406" />
+    <state width="2517" height="452" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1920.1040@0.0.2560.1400" timestamp="1604895738548" />
     <state x="772" y="353" key="SettingsEditor" timestamp="1604175358849">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -241,6 +241,10 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="906" y="610" key="com.intellij.ide.util.TipDialog/0.0.2560.1400/2560.0.1920.1040@0.0.2560.1400" timestamp="1602983531885" />
+    <state x="987" y="546" key="edit.logcat.filter.dialog.dimensions" timestamp="1604895642213">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="987" y="546" key="edit.logcat.filter.dialog.dimensions/0.0.2560.1400/2560.0.1920.1040@0.0.2560.1400" timestamp="1604895642213" />
     <state width="1029" height="614" key="javadoc.popup.new" timestamp="1601844480957">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>

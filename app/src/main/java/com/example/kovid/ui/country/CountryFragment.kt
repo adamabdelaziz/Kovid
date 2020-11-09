@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.example.kovid.data.entities.USValue
 import com.example.kovid.databinding.FragmentCountryBinding
 import com.example.kovid.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,34 +30,22 @@ class CountryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //call fragment setup functions here
-        setupObservers()
 
+        //call fragment setup functions here
+        setupCurrentUSValues()
+        setupHistoricUSValues()
     }
 
-    private fun setupObservers() {
-        viewModel.USValue.observe(viewLifecycleOwner, Observer {
+    private fun setupCurrentUSValues() {
+        viewModel.currentUSValues.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 Resource.Status.SUCCESS -> {
                     Timber.d("SUCCESS")
-                    Timber.d(it.data?.lastModified)
-                    binding.textView.text = it.data?.lastModified
-                }
-                Resource.Status.ERROR -> {
-                    Timber.d("ERROR")
-                }
-                Resource.Status.LOADING -> {
-                    Timber.d("LOADING")
-                }
-            }
-        })
+                    val data = it.data
 
-        viewModel.stateMetadata.observe(viewLifecycleOwner, {
-            when (it.status) {
-                Resource.Status.SUCCESS -> {
-                    Timber.d("SUCCESS")
-                    for (i in it.data!!){
-                        Timber.d(i.name)
+                    if (data != null) {
+                        Timber.d("binding data")
+                        bindData(data)
                     }
                 }
                 Resource.Status.ERROR -> {
@@ -68,4 +57,62 @@ class CountryFragment : Fragment() {
             }
         })
     }
+
+    private fun setupHistoricUSValues() {
+        viewModel.historicUSValues.observe(viewLifecycleOwner, {
+            when (it.status) {
+                Resource.Status.SUCCESS -> {
+                    Timber.d("SUCCESS")
+
+                    binding.progressBar.visibility = View.GONE
+                    binding.scrollView.visibility = View.VISIBLE
+
+                    //refer to StateFragment equivalent if the array size bug occurs again
+                    val list = it.data
+                    if (list != null) {
+                        Timber.d("Historic USValue list not null")
+                        setupCharts(list)
+                    }
+
+                }
+                Resource.Status.ERROR -> {
+                    Timber.d("ERROR")
+                }
+                Resource.Status.LOADING -> {
+                    Timber.d("LOADING")
+
+                    binding.progressBar.visibility = View.VISIBLE
+                    binding.scrollView.visibility = View.GONE
+                }
+            }
+        })
+    }
+
+    private fun setupCharts(historicUSValues: List<USValue>) {
+
+    }
+
+    private fun bindData(USValue: USValue) {
+        Timber.d("bindData called")
+        binding.usValue = USValue
+    }
 }
+
+//comment purgatory, delete later
+
+//        viewModel.stateMetadata.observe(viewLifecycleOwner, {
+//            when (it.status) {
+//                Resource.Status.SUCCESS -> {
+//                    Timber.d("SUCCESS")
+//                    for (i in it.data!!){
+//                        Timber.d(i.name)
+//                    }
+//                }
+//                Resource.Status.ERROR -> {
+//                    Timber.d("ERROR")
+//                }
+//                Resource.Status.LOADING -> {
+//                    Timber.d("LOADING")
+//                }
+//            }
+//        })

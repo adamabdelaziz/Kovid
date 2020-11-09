@@ -8,6 +8,8 @@ import com.example.kovid.data.repository.CovidRepository
 class CountryViewModel @ViewModelInject constructor(private val repository: CovidRepository) :
     ViewModel() {
 
-    val USValue = repository.getCurrentUSValues()
+    val currentUSValues = repository.getCurrentUSValues()
+    val historicUSValues  = repository.getHistoricUSValues()
+
     val stateMetadata = repository.getStateMetaData()
 }

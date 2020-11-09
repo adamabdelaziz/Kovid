@@ -13,8 +13,12 @@ interface CovidService {
     @GET("/v1/us/current.json")
     suspend fun getCurrentUSValues(): Response<USValue>
 
-    @GET("/v1/states/current.json")
-    suspend fun getAllStateValues(): Response<List<StateValue>>
+    @GET("/v1/us/daily.json")
+    suspend fun getHistoricUSValues(): Response<List<USValue>>
+
+
+//    @GET("/v1/states/current.json")
+//    suspend fun getAllStateValues(): Response<List<StateValue>>
 
     //will probably have to make this Response<List<StateValue>>
     //or not?

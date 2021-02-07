@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import com.example.kovid.data.entities.USValue
 import com.example.kovid.databinding.FragmentCountryBinding
 import com.example.kovid.utils.Resource
+import com.yabu.livechart.model.DataPoint
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -63,9 +64,7 @@ class CountryFragment : Fragment() {
             when (it.status) {
                 Resource.Status.SUCCESS -> {
                     Timber.d("SUCCESS")
-
-                    binding.progressBar.visibility = View.GONE
-                    binding.scrollView.visibility = View.VISIBLE
+                    binding.constraintLayout.visibility = View.VISIBLE
 
                     //refer to StateFragment equivalent if the array size bug occurs again
                     val list = it.data
@@ -80,16 +79,26 @@ class CountryFragment : Fragment() {
                 }
                 Resource.Status.LOADING -> {
                     Timber.d("LOADING")
-
-                    binding.progressBar.visibility = View.VISIBLE
-                    binding.scrollView.visibility = View.GONE
+                    binding.constraintLayout.visibility = View.GONE
                 }
             }
         })
     }
 
     private fun setupCharts(historicUSValues: List<USValue>) {
+        Timber.d("setup chart called")
 
+        val liveChart = binding.liveChart
+        val liveChartTwo = binding.liveChartTwo
+        val liveChartThree = binding.liveChartThree
+
+        val positives = mutableListOf<DataPoint>()
+        val hospitializations = mutableListOf<DataPoint>()
+        val deaths = mutableListOf<DataPoint>()
+
+        positives.clear()
+        hospitializations.clear()
+        deaths.clear()
     }
 
     private fun bindData(USValue: USValue) {

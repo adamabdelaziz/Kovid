@@ -10,13 +10,15 @@
     <string name="test_results">Test Results</string>
     <string name="date_selected">Date Selected</string>
     <string name="positive_cases">Positive Cases</string>
-    <string name="positive_covid_19_cases_over_time">Positive COVID-19 Cases Over Time</string>
+    <string name="positive_covid_19_cases_over_time">90 Day Data : Positive Cases</string>
     <string name="total_test_results">Total Test Results</string>
     <string name="last_checked">Last Checked</string>
     <string name="death_increase">Death Increase</string>
     <string name="positive_increase">Positive Increase</string>
-    <string name="todays_data">Today\'s Data</string>
-    <string name="hospitalizations_over_time">Hospitalizations Over Time</string>
+    <string name="todays_data">Today\'s Data for %s</string>
+    <string name="todays_data_US">Today\'s Data for the United States</string>
+    <string name="hospitalizations_over_time">90 Day Data : Hospitalizations</string>
     <string name="hospitalizations">Hospitalizations</string>
-    <string name="deaths_over_time">COVID-19 Deaths Over Time</string>
+    <string name="deaths_over_time">90 Day Data : Deaths</string>
+    <string name="last_updated">Last Updated: %s</string>
 </resources>

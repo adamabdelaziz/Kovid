@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.Pfuster12:LiveChart:1.3.4@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/aa6f2d36844cd5160bd79844e33c9858/jetified-LiveChart-1.3.4/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/aa6f2d36844cd5160bd79844e33c9858/jetified-LiveChart-1.3.4/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/aa6f2d36844cd5160bd79844e33c9858/jetified-LiveChart-1.3.4/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/864876397eaf0cf44629edb75e6b8fc9/jetified-LiveChart-1.3.4/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/864876397eaf0cf44629edb75e6b8fc9/jetified-LiveChart-1.3.4/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/864876397eaf0cf44629edb75e6b8fc9/jetified-LiveChart-1.3.4/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

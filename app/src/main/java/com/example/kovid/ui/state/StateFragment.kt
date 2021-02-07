@@ -64,7 +64,7 @@ class StateFragment : Fragment() {
                     // by calling setupChart()
                     if (list != null) {
                         Timber.d("historic list not null")
-                        Timber.d(list.size.toString() +  " historic list size")
+                        Timber.d(list.size.toString() + " historic list size")
                         if (list.size > 10) {
                             //this is because for whatever fucking reason the list size will be 1
                             //and then a few seconds later it will be the correct full length size
@@ -126,19 +126,24 @@ class StateFragment : Fragment() {
         hospitializations.clear()
         deaths.clear()
 
-        // need to go through the list from the back
-        val stateList = stateValueList.reversed()
+        //reversed() puts it in the correct order chronologically
+        //drop(n-90) gives the past 90 days only
+        val stateList = stateValueList.reversed().drop(stateValueList.size-89)
 
         for ((index, value) in stateList.withIndex()) {
+
             if (value.positive != null && value.totalTestResults != null && value.hospitalizedCurrently != null && value.death != null) {
                 val dataPointPos = DataPoint(index.toFloat(), value.positive.toFloat())
                 val dataPointHosp =
                     DataPoint(index.toFloat(), value.hospitalizedCurrently.toFloat())
                 val dataPointDeath = DataPoint(index.toFloat(), value.death.toFloat())
+                Timber.d(index.toString() + " TRUE INDEX??")
 
                 positives.add(dataPointPos)
                 hospitializations.add(dataPointHosp)
                 deaths.add(dataPointDeath)
+
+
             }
         }
 
@@ -154,10 +159,9 @@ class StateFragment : Fragment() {
             textColor = ContextCompat.getColor(requireContext(), R.color.colorText)
         }
 
-
         liveChart.setDataset(positiveDataset)
             .setLiveChartStyle(chartStyle)
-            .drawBaseline()
+            .drawBaselineFromFirstPoint()
             .drawFill(true)
             .drawSmoothPath()
             .drawVerticalGuidelines(steps = 4)
@@ -246,71 +250,12 @@ class StateFragment : Fragment() {
                 }
             })
             .drawDataset()
-
     }
+
 
     private fun bindData(stateValue: StateValue) {
-
         Timber.d("bindData called")
         binding.stateValue = stateValue
-
-//        val oldDate = stateValue.date.toString()
-//        val year = oldDate.subSequence(0, 4).toString()
-//        val month = oldDate.subSequence(4,6).toString()
-//        val day = oldDate.subSequence(6,8).toString()
-//
-//        Timber.d(year+ " year")
-//        Timber.d(month+ " month")
-//        Timber.d(day + " day")
-//
-//        stateValue.newDate = year + "/" + month + "/" + day
-
     }
 }
-
-
-//    private fun setupObservers() {
-//        viewModel.states.observe(viewLifecycleOwner, Observer {
-//            when (it.status) {
-//                Resource.Status.SUCCESS -> {
-//                    Timber.d("sssss metadata SUCCESS")
-//                    binding.progressBar.visibility = View.GONE
-//                    binding.linearLayout.visibility = View.VISIBLE
-//
-//                    //using the 2 letter state ID passed in from StateListFragment,
-//                    // get the actual data you need pertaining to the state and bind it in bindData()
-//
-//                    val list = it.data
-//
-//                    if (list != null) {
-//                        Timber.d("list size is " + list.size.toString())
-//                        //Not sure why the 0 value isnt the highest date but this ensures it pulls
-//                        // the most recent data for the current data section
-//                        var highestDate = it.data[0]
-//                        Timber.d("list not null")
-//                        for (i in list) {
-//                            if (i.state == stateID) {
-//                                Timber.d("matching state%s", i.state)
-//                                Timber.d("date is " + i.date.toString())
-//                                if (i.date > highestDate.date) {
-//                                    highestDate = i
-//                                }
-//                            }
-//                        }
-//                        bindData(highestDate)
-//                    }
-//                }
-//
-//                Resource.Status.ERROR -> {
-//                    Timber.d("stateFragment metadata  ERROR")
-//
-//                }
-//                Resource.Status.LOADING -> {
-//                    Timber.d("stateFragment metadata LOADING")
-//                    binding.progressBar.visibility = View.VISIBLE
-//                    binding.linearLayout.visibility = View.GONE
-//                }
-//            }
-//        })
-//    }
 

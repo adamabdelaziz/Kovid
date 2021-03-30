@@ -53,6 +53,10 @@ class CountryFragment : Fragment() {
 
                     if (data != null) {
                         Timber.d("binding data")
+                        Timber.d("%s USADEBUG Positive value ", it.data.positive.toString())
+                        Timber.d("%s USADEBUG Death value ", it.data.death.toString())
+                        Timber.d("%s USADEBUG Date Checked value", it.data.dateChecked)
+                        Timber.d("%s USADEBUG Date value", it.data.date.toString())
                         bindData(data)
                     }
                 }
@@ -178,6 +182,59 @@ class CountryFragment : Fragment() {
                 }
             })
             .drawDataset()
+
+        liveChartTwo.setDataset(hospitalizationDataset)
+            .setLiveChartStyle(chartStyle)
+            .drawBaseline()
+            .drawFill(true)
+            .drawSmoothPath()
+            .drawVerticalGuidelines(steps = 4)
+            .drawHorizontalGuidelines(steps = 4)
+            .setOnTouchCallbackListener(object : LiveChart.OnTouchCallback {
+                override fun onTouchCallback(point: DataPoint) {
+                    liveChart.parent.requestDisallowInterceptTouchEvent(true)
+
+                    val value = usList[point.x.toInt()]
+                    if (value.hospitalizedCurrently.toString() != "null" || value.hospitalizedCurrently != null) {
+                        lower_body_one.text = value.hospitalizedCurrently.toString()
+                    } else {
+                        lower_body_one.text = "0"
+                    }
+                    lower_body_two.text = value.date.toString()
+                }
+
+                override fun onTouchFinished() {
+                    liveChart.parent.requestDisallowInterceptTouchEvent(true)
+                }
+            })
+            .drawDataset()
+
+        liveChartThree.setDataset(deathDataset)
+            .setLiveChartStyle(chartStyle)
+            .drawBaseline()
+            .drawFill(true)
+            .drawSmoothPath()
+            .drawVerticalGuidelines(steps = 4)
+            .drawHorizontalGuidelines(steps = 4)
+            .setOnTouchCallbackListener(object : LiveChart.OnTouchCallback {
+                override fun onTouchCallback(point: DataPoint) {
+                    liveChart.parent.requestDisallowInterceptTouchEvent(true)
+                    val value = usList[point.x.toInt()]
+
+                    if (value.death.toString() != "null" || value.death != null) {
+                        lowest_body_one.text = value.death.toString()
+                    } else {
+                        lowest_body_one.text = "0"
+                    }
+                    lowest_body_two.text = value.date.toString()
+                }
+
+                override fun onTouchFinished() {
+                    liveChart.parent.requestDisallowInterceptTouchEvent(true)
+                }
+            })
+            .drawDataset()
+
     }
 
     private fun bindData(USValue: USValue) {
